@@ -1,0 +1,6 @@
+---
+template_dir: "themes"
+content_dir: "contents"
+output_dir: "output"
+server:
+  port: 9817

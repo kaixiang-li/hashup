@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
 
 require File.dirname(__FILE__) + "/../lib/hashup"
-arguments = ARGV.any? ? ARGV : ['-h']
-Hashup::Generator.start(arguments)
+Hashup::Generator.start()

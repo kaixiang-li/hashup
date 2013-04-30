@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require "thor"
 module Hashup
   class Generator < ::Thor
@@ -10,7 +11,7 @@ module Hashup
     desc "setup", "create your first site"
     def setup(mysite)
       puts "setup #{mysite}..."
-      directory("templates/", mysite)
+      directory("#{File.dirname(__FILE__)}/templates/", mysite)
     end
 
     desc "compile FILE", "compile a markdown file"
@@ -24,10 +25,11 @@ module Hashup
 
     desc "preview", "compile all files"
     def preview
+      empty_directory("output")
       site = Hashup::Site.new
       site.generate
-      directory("templates/themes/static/", "templates/output/")
-      `white_castle templates/output/`
+      directory("#{File.dirname(__FILE__)}/templates/themes/static", "output/")
+      `white_castle output/`
     end
 
     desc "post", "create a post"
