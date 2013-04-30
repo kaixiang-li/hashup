@@ -13,11 +13,12 @@ module Hashup
     end
 
     def generate
-      
       # generate posts
       get_posts.each do |post|
+        article = Hashup::Post.new post 
+        @infos["post"] = OpenStruct.new(article.metadata)
         generated_post = Tilt.new("themes/_layout/_layout.slim").render(OpenStruct.new(@infos)) {
-          ::Markascend.compile File.open(post).read
+          article.contents
         }
         puts "#{post} generated.."
         File.open("output/#{File.basename(post, ".mad")}.html", 'w+') do |f|
