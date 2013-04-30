@@ -23,4 +23,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "thor"
   spec.add_development_dependency "markascend"
   spec.add_development_dependency "pygments"
+  spec.add_development_dependency "tilt"
+  spec.add_development_dependency "slim"
 end

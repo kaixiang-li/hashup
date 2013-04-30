@@ -1,5 +1,7 @@
 require "hashup/version"
 require 'hashup/generator'
+require "hashup/site"
+require "slim"
 require "thor"
 require "markascend"
 
