@@ -1,0 +1,9 @@
+---
+site_title: "Welcome to the real world"
+site_banner: "Start from here"
+footer_text: "Built with <a href=\"http://krazylee.github.io/hashup\">Hashup</a> proundly"
+navbar:
+  - name: "home"
+    href: "/"
+  - name: "about"
+    href: "/about"

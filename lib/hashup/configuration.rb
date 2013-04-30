@@ -9,8 +9,13 @@ module  Hashup
         'port' => 9817
       }
     }
-    def read_config_file(filename)
-      configs = YAML.load_file filename
+
+    def initialize filename
+      @filename = filename
+    end
+
+    def configs
+      YAML.load_file @filename
     end
   end
 end

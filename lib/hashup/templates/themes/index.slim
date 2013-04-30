@@ -1,8 +1,14 @@
-h1#index-title 首页
+h1#site-title == site_banner
 
-.content
-  - for post in list[:list] do
-    ul
-      li
-        a href="#{post}" = post
+.row
+  - for nav in navbar
+    .span6
+      a.btn.btn-large.btn-block href="#{nav['href']}" = nav["name"]
+hr
+.row
+  .content
+    - for post in list do
+      ul
+        li
+          a href="#{post}" = post
 

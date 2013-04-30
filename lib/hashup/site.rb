@@ -1,20 +1,22 @@
 require "slim"
-require "json"
+require "yaml"
+require "ostruct"
 require "markascend"
+require_relative "configuration"
 
 module Hashup
-  class Env
-    attr_accessor :list
-  end
   class Site    
     def initialize
       Slim::Engine.set_default_options pretty: true, sort_attrs: false
+      @configs = self.load_config
+      @infos = self.load_infos
     end
 
     def generate
+      
       # generate posts
       get_posts.each do |post|
-        generated_post = Tilt.new("themes/_layout/_layout.slim").render() {
+        generated_post = Tilt.new("themes/_layout/_layout.slim").render(OpenStruct.new(@infos)) {
           ::Markascend.compile File.open(post).read
         }
         puts "#{post} generated.."
@@ -25,11 +27,10 @@ module Hashup
 
       # generate index.html
       File.open("output/index.html", 'w+') do |f|
-        index = Tilt.new("themes/_layout/_layout.slim").render() {
+        index = Tilt.new("themes/_layout/_layout.slim").render(OpenStruct.new(@infos)) {
           list = self.get_generated_posts_list
-          env = Env.new
-          env.list = self.get_generated_posts_list
-          Tilt.new("themes/index.slim").render(env)
+          @infos["list"] = self.get_generated_posts_list
+          Slim::Template.new("themes/index.slim").render(OpenStruct.new(@infos))
         }
         f.puts index
         puts "index.html generated"
@@ -41,15 +42,31 @@ module Hashup
     end
 
     def get_generated_posts_list
-      posts_list = {list:  []}
+      posts_list = []
       get_posts.map do |post|
-        posts_list[:list] << "#{File.basename(post, ".mad")}.html"
+        posts_list << "#{File.basename(post, ".mad")}.html"
       end
       posts_list
+    end
+
+    def load_infos
+      infos = {}
+      Dir.glob("**/*.{yml, yaml}").map do |info|
+        next unless info =~ Regexp.new(@configs["content_dir"])
+        infos.merge! (YAML.load_file info)
+      end
+      infos
+    end
+
+    def load_config
+      configrable = Hashup::Configuration.new "config.yml"
+      configrable.configs 
     end
   end
 end
 
-def render_file(filename)  
-  Tilt.new("themes/_layout/#{filename}").render()
+def render_file(filename)
+  ss = Hashup::Site.new
+  infos = OpenStruct.new(ss.load_infos)
+  Slim::Template.new("themes/_layout/#{filename}").render(infos)
 end
