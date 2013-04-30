@@ -1,31 +1,8 @@
-doctype html
-html
-  head
-    title Slim Examples
-    meta name="keywords" content="template language"
-    meta name="author" content=author
-    javascript:
-      alert('Slim supports embedded javascript!')
+h1#index-title 首页
 
-  body
-    h1 Markup examples
+.content
+  - for post in list[:list] do
+    ul
+      li
+        a href="#{post}" = post
 
-    #content
-      p This example shows you how a basic Slim file looks like.
-
-      == yield
-
-      - unless items.empty?
-        table
-          - for item in items do
-            tr
-              td.name = item.name
-              td.price = item.price
-      - else
-        p
-         | No items found.  Please add some inventory.
-            Thank you!
-
-    div id="footer"
-      == render 'footer'
-      | Copyright © #{year} #{author}   

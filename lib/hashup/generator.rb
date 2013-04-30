@@ -24,13 +24,10 @@ module Hashup
 
     desc "preview", "compile all files"
     def preview
-=begin
-      if File.exist? "config.yaml"
-        Dir.foreach("content") {|x| puts "got #{x}"}
-      end
-=end
       site = Hashup::Site.new
       site.generate
+      directory("templates/themes/static/", "templates/output/")
+      `white_castle templates/output/`
     end
 
     desc "post", "create a post"
