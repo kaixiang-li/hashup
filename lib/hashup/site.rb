@@ -18,7 +18,8 @@ module Hashup
         article = Hashup::Post.new post 
         @infos["post"] = OpenStruct.new(article.metadata)
         generated_post = Tilt.new("themes/_layout/_layout.slim").render(OpenStruct.new(@infos)) {
-          article.contents
+          @infos["article"] = article.contents
+          Slim::Template.new("themes/post.slim").render(OpenStruct.new(@infos))
         }
         puts "#{post} generated.."
         File.open("output/#{File.basename(post, ".mad")}.html", 'w+') do |f|

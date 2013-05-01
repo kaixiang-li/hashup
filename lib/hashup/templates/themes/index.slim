@@ -1,10 +1,3 @@
-h1#site-title == site_banner
-
-.row
-  - for nav in navbar
-    .span6
-      a.btn.btn-large.btn-block href="#{nav['href']}" = nav["name"]
-hr
 .row
   .content
     - for post in list do

@@ -1,6 +1,7 @@
 ---
 template_dir: "themes"
 content_dir: "contents"
+posts_folder: "_posts"
 output_dir: "output"
 server:
   port: 9817

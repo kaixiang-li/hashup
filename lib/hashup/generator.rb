@@ -28,13 +28,14 @@ module Hashup
       empty_directory("output")
       site = Hashup::Site.new
       site.generate
-      directory("#{File.dirname(__FILE__)}/templates/themes/static", "output/")
+      directory("#{File.dirname(__FILE__)}/templates/themes/static", "output/static")
       `white_castle output/`
     end
 
     desc "post", "create a post"
-    def post(doc)
-
+    def post
+      title = ask("the title of this post: ") 
+      create_file(File.join("contents", "_posts", title)) if title
     end
 
     desc "draft", "create a draft"
