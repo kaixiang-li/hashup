@@ -35,7 +35,16 @@ module Hashup
     desc "post", "create a post"
     def post
       title = ask("the title of this post: ") 
-      create_file(File.join("contents", "_posts", title)) if title
+      tags = ask("tags(seperated by comma or space): ").strip().split(/\s|,/).to_s.gsub(/"/,"")
+      create_file(File.join("contents", "_posts", "#{title.gsub(/\s/, "_")}.mad")) do
+        <<META
+---
+title: #{title}
+tags: #{tags}
+createDate: #{Time.new.to_s}
+---
+META
+      end if title
     end
 
     desc "draft", "create a draft"

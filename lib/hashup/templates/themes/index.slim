@@ -3,5 +3,7 @@
     - for post in list do
       ul.posts-list
         li
-          a href="#{post}" = post
+          a href="#{post.filename}" = post.title
+          span = post.created
+              
 

@@ -30,7 +30,6 @@ module Hashup
       # generate index.html
       File.open("output/index.html", 'w+') do |f|
         index = Tilt.new("themes/_layout/_layout.slim").render(OpenStruct.new(@infos)) {
-          list = self.get_generated_posts_list
           @infos["list"] = self.get_generated_posts_list
           Slim::Template.new("themes/index.slim").render(OpenStruct.new(@infos))
         }
@@ -45,8 +44,8 @@ module Hashup
 
     def get_generated_posts_list
       posts_list = []
-      get_posts.map do |post|
-        posts_list << "#{File.basename(post, ".mad")}.html"
+      get_posts.each do |post|
+        posts_list << (Hashup::Post.new post)
       end
       posts_list
     end
