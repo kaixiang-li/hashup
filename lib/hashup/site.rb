@@ -39,7 +39,7 @@ module Hashup
     end
 
     def get_posts
-      Dir.glob "**/*.{mad, md, markdown}"
+      Dir.glob "#{@configs["content_dir"]}/#{@configs["posts_folder"]}/**/*.{mad, md, markdown}"
     end
 
     def get_generated_posts_list

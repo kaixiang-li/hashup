@@ -2,12 +2,12 @@ require "yaml"
 require "markascend"
 module Hashup
   class Post
-    attr_accessor :filename, :title, :created, :tags, :metadata, :contents
+    attr_accessor :filename, :title, :date, :tags, :metadata, :contents
     def initialize post
       self.parse_post post
       @filename = "#{File.basename(post,".mad")}.html"
       @title = @metadata["title"]
-      @created = @metadata["created"]
+      @date = @metadata["date"]
       @tags = @metadata["tags"]
     end
 

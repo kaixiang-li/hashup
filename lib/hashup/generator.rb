@@ -41,10 +41,25 @@ module Hashup
 ---
 title: #{title}
 tags: #{tags}
-createDate: #{Time.new.to_s}
+date: #{Time.new.to_s}
 ---
 META
       end if title
+    end
+
+    desc "page", "create a page"
+    def page
+      name = ask("the name of the page: ")
+      description = ask("description: ").chomp!
+      create_file(File.join("contents", "_pages", "#{name}.mad")) do
+      <<META
+---
+title: #{name}
+date: #{Time.new.to_s}
+description: #{description} 
+---
+META
+      end if name
     end
 
     desc "draft", "create a draft"

@@ -6,4 +6,4 @@ navbar:
   - name: "home"
     href: "/"
   - name: "about"
-    href: "/about"
+    href: "/about.html"
