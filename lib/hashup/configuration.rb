@@ -11,11 +11,16 @@ module  Hashup
     }
 
     def initialize filename
-      @filename = filename
+      if File.exists? filename
+        @filename = filename
+      else
+        puts "#{filename} not found, maybe you are not in the right folder"
+      end
     end
 
     def configs
-      YAML.load_file @filename
+      return YAML.load_file @filename if @filename
+      DEFAULTS
     end
   end
 end

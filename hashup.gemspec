@@ -25,5 +25,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pygments"
   spec.add_development_dependency "tilt"
   spec.add_development_dependency "slim"
-  spec.add_development_dependency "white_castle"
 end

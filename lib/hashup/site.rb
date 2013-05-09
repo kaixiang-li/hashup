@@ -6,9 +6,10 @@ require_relative "configuration"
 
 module Hashup
   class Site    
+    attr_reader :configs, :infos
     def initialize
       Slim::Engine.set_default_options pretty: true, sort_attrs: false
-      @configs = self.load_config
+      @configs = self.load_config "config.yml"
       @infos = self.load_infos
     end
 
@@ -39,7 +40,7 @@ module Hashup
     end
 
     def get_posts
-      Dir.glob "#{@configs["content_dir"]}/#{@configs["posts_folder"]}/**/*.{mad, md, markdown}"
+      Dir.glob "#{@configs["content_dir"]}/#{@configs["posts_folder"]}/**/*.{ma, mad, md, markdown}"
     end
 
     def get_generated_posts_list
@@ -59,8 +60,8 @@ module Hashup
       infos
     end
 
-    def load_config
-      configrable = Hashup::Configuration.new "config.yml"
+    def load_config config_file
+      configrable = Hashup::Configuration.new config_file
       configrable.configs 
     end
   end

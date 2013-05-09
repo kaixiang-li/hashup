@@ -17,7 +17,7 @@ module Hashup
     desc "compile FILE", "compile a markdown file"
     def compile(file)
       fragment = Markascend.compile (File.open(file, "r").read)
-      File.open("#{File.basename(file, ".mad")}.html", "w+") do |f|
+      File.open("#{File.basename(file, ".ma")}.html", "w+") do |f|
         f.write(fragment)
       end
       puts "#{file} compiled"
@@ -28,15 +28,16 @@ module Hashup
       empty_directory("output")
       site = Hashup::Site.new
       site.generate
-      directory("#{File.dirname(__FILE__)}/templates/themes/static", "output/static")
-      `white_castle output/`
+      @configs = site.configs
+      directory("#{File.dirname(__FILE__)}/templates/#{@configs["template_dir"]}/static", "#{@configs["output_dir"]}/static")
+      `rackup -b "run Rack::Directory.new '.'" -p #{@configs["server"]["port"]}`
     end
 
     desc "post", "create a post"
     def post
       title = ask("the title of this post: ") 
       tags = ask("tags(seperated by comma or space): ").strip().split(/\s|,/).to_s.gsub(/"/,"")
-      create_file(File.join("contents", "_posts", "#{title.gsub(/\s/, "_")}.mad")) do
+      create_file(File.join("#{@configs["content_dir"]}", "#{@configs["output_dir"]}", "#{title.gsub(/\s/, "_")}.ma")) do
         <<META
 ---
 title: #{title}
@@ -51,7 +52,7 @@ META
     def page
       name = ask("the name of the page: ")
       description = ask("description: ").chomp!
-      create_file(File.join("contents", "_pages", "#{name}.mad")) do
+      create_file(File.join("#{@configs["content_dir"]}", "#{@configs["pages_folder"]}", "#{name}.ma")) do
       <<META
 ---
 title: #{name}
