@@ -76,6 +76,20 @@ META
       end if name
     end
 
+    desc "deploy", "deploy to github"
+    def deploy
+      site = Hashup::Site.new
+      @configs = site.configs
+      Dir.chdir "#{@configs["output_dir"]}" do
+        system "git add ."
+        system "git add -u"
+        puts "commiting site, updated at #{Time.now.utc}"
+        message = "Site updated at #{Time.now.utc}"
+        system "git commit -m \"#{message}\""
+        system "git push origin master --force"
+      end
+    end
+
     desc "draft", "create a draft"
     def draft(doc)
     end
