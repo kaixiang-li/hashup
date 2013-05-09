@@ -5,19 +5,29 @@
 
 Add this line to your application's Gemfile:
 
-    gem 'hashup'
+    gem ins 'hashup'
 
 And then execute:
 
-    $ bundle
+    $ hashup setup myblog
 
-Or install it yourself as:
+And then:
 
-    $ gem install hashup
+    $ cd myblog
+    $ hashup preview
+
+There you go!
 
 ## Usage
 
-TODO: Write usage instructions here
+Post a blog
+
+    hashup post
+
+Create a page
+    
+    hashup page
+
 
 ## Contributing
 

@@ -23,7 +23,7 @@ module Hashup
           Slim::Template.new("themes/post.slim").render(OpenStruct.new(@infos))
         }
         puts "#{post} generated.."
-        File.open("output/#{File.basename(post, ".mad")}.html", 'w+') do |f|
+        File.open("output/#{File.basename(post, ".ma")}.html", 'w+') do |f|
           f.puts generated_post
         end
       end

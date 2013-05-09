@@ -10,6 +10,7 @@ module Hashup
 
     desc "setup", "create your first site"
     def setup(mysite)
+      return if root?
       puts "setup #{mysite}..."
       directory("#{File.dirname(__FILE__)}/templates/", mysite)
     end
@@ -25,12 +26,18 @@ module Hashup
 
     desc "preview", "compile all files"
     def preview
-      empty_directory("output")
-      site = Hashup::Site.new
-      site.generate
-      @configs = site.configs
-      directory("#{File.dirname(__FILE__)}/templates/#{@configs["template_dir"]}/static", "#{@configs["output_dir"]}/static")
-      `rackup -b "run Rack::Directory.new '.'" -p #{@configs["server"]["port"]}`
+      if root?
+        empty_directory("output")
+        site = Hashup::Site.new
+        site.generate
+        @configs = site.configs
+        directory("#{File.dirname(__FILE__)}/templates/#{@configs["template_dir"]}/static", "#{@configs["output_dir"]}/static", :verbose => false)
+        run_server
+      else
+        if find_root
+          preview
+        end
+      end
     end
 
     desc "post", "create a post"
@@ -65,6 +72,27 @@ META
 
     desc "draft", "create a draft"
     def draft(doc)
+    end
+
+    private
+    def find_root
+      3.times do
+        if root?
+          return Dir.pwd
+        else
+          Dir.chdir ".."
+        end
+      end
+      false
+    end
+
+    def root?
+      File.exists? "config.yml"
+    end
+
+    def run_server
+      find_root
+      `white_castle ./output`
     end
   end
 end
