@@ -12,7 +12,11 @@ module Hashup
     def setup(mysite)
       return if root?
       puts "setup #{mysite}..."
-      directory("#{File.dirname(__FILE__)}/templates/", mysite)
+      directory("#{File.dirname(__FILE__)}/templates/", mysite, :exclude_pattern => /themes|contents/)
+      %w[contents themes].each do |item|
+        empty_directory(item)
+        directory("#{File.dirname(__FILE__)}/templates/#{item}", "#{mysite}/#{item}", :verbose => false)
+      end
     end
 
     desc "compile FILE", "compile a markdown file"
