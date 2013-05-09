@@ -23,13 +23,13 @@ module Hashup
           Slim::Template.new("themes/post.slim").render(OpenStruct.new(@infos))
         }
         puts "#{post} generated.."
-        File.open("output/#{File.basename(post, ".ma")}.html", 'w+') do |f|
+        File.open("#{@configs["output_dir"]}/#{File.basename(post, ".ma")}.html", 'w+') do |f|
           f.puts generated_post
         end
       end
 
       # generate index.html
-      File.open("output/index.html", 'w+') do |f|
+      File.open("#{@configs["output_dir"]}/index.html", 'w+') do |f|
         index = Tilt.new("themes/_layout/_layout.slim").render(OpenStruct.new(@infos)) {
           @infos["list"] = self.get_generated_posts_list
           Slim::Template.new("themes/index.slim").render(OpenStruct.new(@infos))

@@ -5,7 +5,7 @@ module Hashup
     attr_accessor :filename, :title, :date, :tags, :metadata, :contents
     def initialize post
       self.parse_post post
-      @filename = "#{File.basename(post,".mad")}.html"
+      @filename = "#{File.basename(post,".ma")}.html"
       @title = @metadata["title"]
       @date = @metadata["date"]
       @tags = @metadata["tags"]

@@ -48,6 +48,8 @@ module Hashup
     def post
       title = ask("the title of this post: ") 
       tags = ask("tags(seperated by comma or space): ").strip().split(/\s|,/).to_s.gsub(/"/,"")
+      site = Hashup::Site.new
+      @configs = site.configs
       create_file(File.join("#{@configs["content_dir"]}", "#{@configs["output_dir"]}", "#{title.gsub(/\s/, "_")}.ma")) do
         <<META
 ---
