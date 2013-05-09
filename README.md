@@ -3,18 +3,22 @@
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Get it:
 
-    gem ins 'hashup'
+    $ gem ins hashup
 
 And then execute:
 
-    $ hashup setup myblog
+    $ hashup setup github_id.github.com
 
 And then:
 
     $ cd myblog
     $ hashup preview
+
+And then deploy to github:
+
+    $ hashup deploy
 
 There you go!
 
@@ -28,6 +32,12 @@ Create a page
     
     hashup page
 
+## Features
+- refuse liquid, use slim
+- refuse plain markdown, use markascend
+- refuse files mess around, contents and themes seperated
+- refuse the same ui, use flat-ui
+- ...
 
 ## Contributing
 

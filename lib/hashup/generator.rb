@@ -38,9 +38,7 @@ module Hashup
         directory("#{File.dirname(__FILE__)}/templates/#{@configs["template_dir"]}/static", "#{@configs["output_dir"]}/static", :verbose => false)
         run_server
       else
-        if find_root
-          preview
-        end
+        puts "not in the root"
       end
     end
 
@@ -81,8 +79,7 @@ META
       site = Hashup::Site.new
       @configs = site.configs
       Dir.chdir "#{@configs["output_dir"]}" do
-        system "git add ."
-        system "git add -u"
+        system "git add . -f"
         puts "commiting site, updated at #{Time.now.utc}"
         message = "Site updated at #{Time.now.utc}"
         system "git commit -m \"#{message}\""
@@ -95,23 +92,11 @@ META
     end
 
     private
-    def find_root
-      3.times do
-        if root?
-          return Dir.pwd
-        else
-          Dir.chdir ".."
-        end
-      end
-      false
-    end
-
     def root?
       File.exists? "config.yml"
     end
 
     def run_server
-      find_root
       `white_castle ./output`
     end
   end
