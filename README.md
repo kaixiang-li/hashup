@@ -1,6 +1,8 @@
 # Hashup
 **Yet another static sites generator**
 
+**Current Version: 0.0.5**
+
 ## Installation
 
 Get it:
